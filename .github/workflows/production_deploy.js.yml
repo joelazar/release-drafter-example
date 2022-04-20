@@ -1,0 +1,19 @@
+name: Production deploy
+on: workflow_dispatch
+
+jobs:
+  deploy-prod:
+    name: 🚀 Production deployment
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Do some magic
+        run: echo magic
+
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release_drafter.yml
+          disable-autolabeler: false
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
