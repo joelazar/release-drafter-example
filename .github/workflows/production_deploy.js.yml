@@ -10,8 +10,20 @@ jobs:
       - name: Do some magic
         run: echo magic
 
+      - name: Get lastest draft release
+        id: get_latest_draft_release
+        run: |
+          echo "::set-output name=DRAFT_RELEASE::$(gh release list -L 1 -R $GITHUB_REPOSITORY | grep Draft)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo ${{ steps.get_latest_draft_release.outputs.DRAFT_RELEASE }}
+      - run: echo ${{ env.GITHUB_REPOSITORY_OWNER }}
+      - run: echo $GITHUB_REPOSITORY
+      - run: env
+
       - uses: release-drafter/release-drafter@v5
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && steps.get_latest_draft_release.outputs.DRAFT_RELEASE }}
         with:
           config-name: release_drafter.yml
           disable-autolabeler: false
