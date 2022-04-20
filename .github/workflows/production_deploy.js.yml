@@ -10,8 +10,14 @@ jobs:
       - name: Do some magic
         run: echo magic
 
+      - name: Get draft release
+        id: get_draft_release
+        uses: agners/get-draft-release@v0.1.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - uses: release-drafter/release-drafter@v5
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && steps.get_draft_release.outputs.id }}
         with:
           config-name: release_drafter.yml
           disable-autolabeler: false
