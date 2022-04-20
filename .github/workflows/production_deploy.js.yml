@@ -11,6 +11,7 @@ jobs:
         run: echo magic
 
       - uses: release-drafter/release-drafter@v5
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
           config-name: release_drafter.yml
           disable-autolabeler: false

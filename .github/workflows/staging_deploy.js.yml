@@ -1,22 +1,14 @@
-name: CI
+name: Staging deploy
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - ready_for_review
 
 jobs:
   deploy-preprod:
     name: 🚀 Staging deployment
     runs-on: ubuntu-latest
     environment: staging
-    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Do some magic
         run: echo magic
