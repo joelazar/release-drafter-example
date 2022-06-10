@@ -1,0 +1,29 @@
+name: Release slack notification
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get random joke
+        id: joke
+        run: |
+          echo "::set-output name=random::$(curl https://v2.jokeapi.dev/joke/Programming?format=txt)"
+
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: only_dev
+          SLACK_COLOR: good
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: '${{ toJSON(github.event.release.body) }} ${{ github.event.release.html_url }}'
+          SLACK_TITLE: '${{ github.event.release.tag_name}} is published by ${{ github.actor }}! :rocket:'
+          SLACK_USERNAME: Growblocks app
+          SLACK_FOOTER: ${{ steps.joke.outputs.random }}
+          MSG_MINIMAL: true
