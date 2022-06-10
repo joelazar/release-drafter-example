@@ -1,8 +1,10 @@
 name: Release slack notification
 on:
   release:
-    types: [published]
-  workflow_dispatch:
+    types:
+      - published
+      - released
+
 jobs:
   slackNotification:
     name: Slack Notification
@@ -13,7 +15,7 @@ jobs:
       - name: Get random joke
         id: joke
         run: |
-          echo "::set-output name=random::$(curl https://v2.jokeapi.dev/joke/Programming?format=txt)"
+          echo "::set-output name=random::$(curl -s https://v2.jokeapi.dev/joke/Programming\?format=txt | tr '\n' ' ')"
 
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
