@@ -24,4 +24,6 @@ jobs:
           disable-autolabeler: false
           publish: true
         env:
+          # Using own PAT because other github action won't be triggered otherwise
+          # https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
           GITHUB_TOKEN: ${{ secrets.PAT }}

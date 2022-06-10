@@ -11,20 +11,33 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get random joke
-        id: joke
-        run: |
-          echo "::set-output name=random::$(curl -s https://v2.jokeapi.dev/joke/Programming\?format=txt | tr '\n' ' ')"
-
       - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+        uses: tokorom/action-slack-incoming-webhook@main
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: only_dev
-          SLACK_COLOR: good
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: '${{ toJSON(github.event.release.body) }} ${{ github.event.release.html_url }}'
-          SLACK_TITLE: '${{ github.event.release.tag_name}} is published by ${{ github.actor }}! :rocket:'
-          SLACK_USERNAME: Growblocks app
-          SLACK_FOOTER: ${{ steps.joke.outputs.random }}
-          MSG_MINIMAL: true
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          text: A release is published.
+          blocks: |
+            [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": '${{ github.event.release.tag_name}} is published by ${{ github.actor }}! :rocket:'
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ${{ toJSON(github.event.release.body) }}
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "${{ github.event.release.html_url }}"
+                }
+              }
+            ]
