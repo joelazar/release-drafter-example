@@ -1,7 +1,9 @@
 name: Release slack notification
+
 on:
   release:
     types:
+      - created
       - published
       - released
 
