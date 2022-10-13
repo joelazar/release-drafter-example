@@ -7,6 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Wait for possible ongoing staging deployment to succeed
+        uses: lewagon/wait-on-check-action@v1.0.0
+        with:
+          ref: main
+          check-name: '🚀 Staging deployment'
+          repo-token: ${{ secrets.PAT }}
+          wait-interval: 20
+
       - name: Do some magic
         run: echo magic
 

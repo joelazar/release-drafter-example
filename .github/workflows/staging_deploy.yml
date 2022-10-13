@@ -5,10 +5,13 @@ on:
     branches: [main]
 
 jobs:
-  deploy-preprod:
+  deploy-staging:
     name: 🚀 Staging deployment
     runs-on: ubuntu-latest
     environment: staging
     steps:
       - name: Do some magic
         run: echo magic
+
+      - name: Sleep for 120 seconds
+        run: sleep 120
