@@ -26,3 +26,5 @@ The draft change note is constructed based on the available github labels:
 - skip-changelog - Won't be included in the changelog
 
 You can find them [here](https://github.com/joelazar/releaser-example/issues/labels) too.
+
+# Update
