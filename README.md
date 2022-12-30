@@ -1,7 +1,5 @@
 # release-drafter-example
 
-![](https://media.giphy.com/media/CDZwopbecAbIc/giphy-downsized.gif)
-
 This repository demonstrates how to use [release-drafter](https://github.com/marketplace/actions/release-drafter) github action.
 Also, there is another [github action](./.github/workflows/release_slack_notification.yml) added for sending notification to a slack channel at every new release creation.
 
